@@ -8,7 +8,7 @@
     <style>
         :root {
             --accent: #0078D7;
-            --accent-text: #ffffff; /* Меняется на черный, если акцент белый */
+            --accent-text: #ffffff;
             --bg: #000000;
             --surface: #111111;
             --border: #222222;
@@ -44,7 +44,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
-        /* --- Плитки (Windows 10 Mobile Style) --- */
+        /* --- Плитки --- */
         .win-tile {
             position: relative; cursor: pointer; overflow: hidden;
             transition: transform 0.1s ease-out, filter 0.2s;
@@ -94,6 +94,10 @@
 
         .hidden-view { display: none !important; }
         ::-webkit-scrollbar { width: 3px; } ::-webkit-scrollbar-thumb { background: #333; }
+        
+        /* Типографика для инфо страниц */
+        .policy-text p { margin-bottom: 1rem; color: #cbd5e1; font-size: 0.875rem; line-height: 1.6; }
+        .policy-text h4 { color: var(--accent); font-weight: bold; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
     </style>
 </head>
 <body class="flex flex-col relative bg-black text-white">
@@ -110,17 +114,15 @@
         <div class="h-1 bg-[var(--surface)] w-full"><div id="wiz-progress" class="h-full bg-[var(--accent)] transition-all duration-500" style="width: 25%;"></div></div>
         
         <div class="flex-1 relative overflow-hidden">
-            <!-- Шаг 1 -->
             <div id="wiz-1" class="absolute inset-0 p-8 flex flex-col justify-between slide-up hidden-view">
                 <div class="mt-12">
                     <div class="text-[var(--accent)] font-bold uppercase tracking-widest text-xs mb-4">Шаг 1 из 3</div>
                     <h1 class="text-4xl font-light mb-6 leading-tight">Ваш новый<br>инструмент</h1>
                     <p class="text-gray-400 text-lg leading-relaxed">Добро пожаловать в NFC Master. Инновационный, мощный и безопасный. Давайте проведем первичную настройку.</p>
                 </div>
-                <button onclick="app.wiz(2)" class="win-btn accent w-full text-lg mb-8 shadow-[0_0_15px_rgba(0,120,215,0.3)]">Далее</button>
+                <button onclick="app.wiz(2)" class="win-btn accent w-full text-lg mb-8">Далее</button>
             </div>
 
-            <!-- Шаг 2: Цвет -->
             <div id="wiz-2" class="absolute inset-0 p-8 flex flex-col justify-between hidden-view">
                 <div class="mt-12">
                     <h1 class="text-3xl font-light mb-6">Персонализация</h1>
@@ -133,19 +135,17 @@
                         <div class="w-full aspect-square rounded-full border-2 border-transparent hover:border-white active:scale-90 transition-transform" style="background: #881798;" onclick="app.setAccent('#881798')"></div>
                         <div class="w-full aspect-square rounded-full border-2 border-transparent hover:border-white active:scale-90 transition-transform" style="background: #0099bc;" onclick="app.setAccent('#0099bc')"></div>
                         <div class="w-full aspect-square rounded-full border-2 border-transparent hover:border-white active:scale-90 transition-transform" style="background: #d83b01;" onclick="app.setAccent('#d83b01')"></div>
-                        <!-- Белый акцент: теперь будет делать текст чёрным автоматически! -->
                         <div class="w-full aspect-square rounded-full border-2 border-gray-500 active:scale-90 transition-transform bg-[#ffffff]" onclick="app.setAccent('#ffffff')"></div> 
                     </div>
                 </div>
-                <button onclick="app.wiz(3)" class="win-btn accent w-full text-lg mb-8 shadow-[0_0_15px_rgba(0,120,215,0.3)]">Далее</button>
+                <button onclick="app.wiz(3)" class="win-btn accent w-full text-lg mb-8">Далее</button>
             </div>
 
-            <!-- Шаг 3: Сканирование -->
             <div id="wiz-3" class="absolute inset-0 p-8 flex flex-col justify-between hidden-view">
                 <div class="mt-12 flex flex-col items-center text-center">
                     <div class="text-[var(--accent)] font-bold uppercase tracking-widest text-xs mb-4 w-full text-left">Шаг 2 из 3</div>
                     <h1 class="text-3xl font-light mb-4 w-full text-left">Калибровка</h1>
-                    <p class="text-gray-400 mb-12 w-full text-left text-sm">Для активации функций приложения <b>желательно</b> отсканировать вашу первую NFC-метку.</p>
+                    <p class="text-gray-400 mb-12 w-full text-left text-sm">Для активации функций приложения <b>необходимо</b> отсканировать вашу первую NFC-метку.</p>
                     
                     <div id="wiz-scan-radar" class="w-48 h-48 rounded-full border-2 border-[var(--accent)] flex items-center justify-center relative mb-8">
                         <div class="absolute inset-0 rounded-full border-2 border-[var(--accent)] opacity-50 animate-ping" style="animation-duration: 2s;"></div>
@@ -156,7 +156,6 @@
                 <button id="wiz-skip-btn" onclick="app.showWizardSuccess('ОТКРЫТ ПРОПУСК')" class="win-btn border-gray-600 text-gray-500 w-full mb-8 hidden-view bg-transparent">Пропустить</button>
             </div>
 
-            <!-- Шаг 4: Успех -->
             <div id="wiz-4" class="absolute inset-0 p-8 flex flex-col justify-between hidden-view">
                 <div class="mt-12 flex flex-col items-center text-center">
                     <div class="text-[var(--accent)] font-bold uppercase tracking-widest text-xs mb-4 w-full text-left">Шаг 3 из 3</div>
@@ -167,7 +166,7 @@
                         <path class="chk-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
                     </svg>
 
-                    <h2 class="text-xl font-bold text-green-500 mb-4 uppercase tracking-wider">Инициализация завершена</h2>
+                    <h2 class="text-xl font-bold text-green-500 mb-4 uppercase tracking-wider">Метка распознана</h2>
                     <div class="bg-[var(--surface)] border border-[var(--border)] px-6 py-4 w-full">
                         <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Ваш Serial ID</div>
                         <div id="wiz-uid-result" class="font-mono text-xl tracking-widest text-white">00:00:00:00</div>
@@ -195,9 +194,7 @@
                 <p class="text-[var(--accent)] font-bold uppercase tracking-widest text-[10px]">Система инициализирована</p>
             </div>
 
-            <!-- ГРИД ПЛИТОК (Windows 10 Style) -->
             <div class="grid grid-cols-4 gap-[2px]">
-                
                 <!-- Информация о железе (4x2 Широкая) -->
                 <div class="col-span-4 aspect-[2.5/1] win-tile bg-[var(--surface)] border border-[var(--border)] p-4">
                     <div class="text-[10px] uppercase font-bold text-gray-500 tracking-widest border-b border-[#333] pb-1 mb-2">Состояние модулей</div>
@@ -320,7 +317,6 @@
             <h2 class="text-3xl font-light mb-8 text-white">Безопасность</h2>
             
             <div class="space-y-4">
-                <!-- Установка пароля -->
                 <div class="bg-[var(--surface)] p-4 border border-[var(--border)] cursor-pointer hover:border-gray-500 transition-colors" onclick="app.nav('pwd-set')">
                     <div class="flex items-center gap-4">
                         <svg class="w-8 h-8 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
@@ -331,7 +327,6 @@
                     </div>
                 </div>
 
-                <!-- Снятие пароля -->
                 <div class="bg-[var(--surface)] p-4 border border-[var(--border)] cursor-pointer hover:border-gray-500 transition-colors" onclick="app.nav('pwd-rem')">
                     <div class="flex items-center gap-4">
                         <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
@@ -423,7 +418,7 @@
             </div>
 
             <h3 class="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] mb-4 border-b border-[#333] pb-2">Цвет</h3>
-            <div class="grid grid-cols-4 gap-3 mb-12">
+            <div class="grid grid-cols-4 gap-3 mb-10">
                 <div class="w-full aspect-square rounded-full cursor-pointer border-2 border-transparent hover:border-white active:scale-90" style="background: #0078D7;" onclick="app.setAccent('#0078D7')"></div>
                 <div class="w-full aspect-square rounded-full cursor-pointer border-2 border-transparent hover:border-white active:scale-90" style="background: #e81123;" onclick="app.setAccent('#e81123')"></div>
                 <div class="w-full aspect-square rounded-full cursor-pointer border-2 border-transparent hover:border-white active:scale-90" style="background: #107c10;" onclick="app.setAccent('#107c10')"></div>
@@ -431,12 +426,89 @@
                 <div class="w-full aspect-square rounded-full cursor-pointer border-2 border-transparent hover:border-white active:scale-90" style="background: #ff8c00;" onclick="app.setAccent('#ff8c00')"></div>
                 <div class="w-full aspect-square rounded-full cursor-pointer border-2 border-transparent hover:border-white active:scale-90" style="background: #0099bc;" onclick="app.setAccent('#0099bc')"></div>
                 <div class="w-full aspect-square rounded-full cursor-pointer border-2 border-transparent hover:border-white active:scale-90" style="background: #d83b01;" onclick="app.setAccent('#d83b01')"></div>
-                <!-- Белый акцент: теперь автоматически переключает текст на плитках в черный цвет для читаемости -->
                 <div class="w-full aspect-square rounded-full cursor-pointer border-2 border-gray-600 bg-[#ffffff] active:scale-90" onclick="app.setAccent('#ffffff')"></div>
             </div>
+
+            <!-- ИНФОРМАЦИОННЫЙ БЛОК -->
+            <h3 class="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] mb-4 border-b border-[#333] pb-2 mt-8">Информация</h3>
+            <div class="space-y-3 mb-12">
+                <div class="bg-[var(--surface)] p-4 border border-[var(--border)] cursor-pointer hover:border-gray-500 transition-colors" onclick="app.nav('about')">
+                    <div class="font-bold text-white text-sm uppercase tracking-wider">О приложении</div>
+                    <div class="text-xs text-gray-500 mt-1">Версия, разработчики, технологии</div>
+                </div>
+                <div class="bg-[var(--surface)] p-4 border border-[var(--border)] cursor-pointer hover:border-gray-500 transition-colors" onclick="app.nav('privacy')">
+                    <div class="font-bold text-white text-sm uppercase tracking-wider">Конфиденциальность</div>
+                    <div class="text-xs text-gray-500 mt-1">Политика хранения и безопасности</div>
+                </div>
+            </div>
             
-            <button onclick="localStorage.removeItem('nfc_setup_v7'); location.reload();" class="win-btn border border-[#444] w-full text-gray-500 bg-transparent text-[10px]">ПОВТОРНЫЙ ЗАПУСК МАСТЕРА НАСТРОЙКИ</button>
+            <button onclick="localStorage.removeItem('nfc_setup_v8'); location.reload();" class="win-btn border border-[#444] w-full text-gray-500 bg-transparent text-[10px]">СБРОСИТЬ НАСТРОЙКИ (SETUP WIZARD)</button>
         </section>
+
+        <!-- ================= VIEW: ABOUT (О ПРИЛОЖЕНИИ) ================= -->
+        <section id="view-about" class="view-section hidden-view p-6 pb-10 h-full overflow-y-auto">
+            <h2 class="text-3xl font-light mb-8">О приложении</h2>
+            
+            <div class="flex flex-col items-center justify-center py-6 mb-6 bg-[var(--surface)] border border-[var(--border)]">
+                <svg class="w-20 h-20 text-[var(--accent)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path></svg>
+                <div class="text-2xl font-light tracking-[0.2em] uppercase">NFC Master</div>
+                <div class="text-xs text-[var(--accent)] font-bold tracking-widest mt-2 px-3 py-1 border border-[var(--accent)]">Версия 8.0 (Win10 UWP)</div>
+            </div>
+
+            <div class="policy-text">
+                <h4 class="text-[var(--accent)]">Обзор</h4>
+                <p>NFC Master — это профессиональный инструмент для управления NFC (Near Field Communication) метками, спроектированный с соблюдением строгих принципов интерфейса Microsoft Fluent Design и Windows 10 Mobile.</p>
+                
+                <h4 class="text-[var(--accent)]">Технологии</h4>
+                <p>Приложение построено с использованием современного стека веб-технологий и аппаратных интерфейсов браузера Google Chrome:<br>
+                • <span class="font-mono text-[var(--accent)]">Web NFC API</span> (NDEFReader / NDEFWriter)<br>
+                • <span class="font-mono text-[var(--accent)]">WakeLock API</span><br>
+                • <span class="font-mono text-[var(--accent)]">Vibration API</span><br>
+                • <span class="font-mono text-[var(--accent)]">Web Audio API</span></p>
+
+                <h4 class="text-[var(--accent)]">Возможности</h4>
+                <p>• Чтение и анализ NDEF-сообщений.<br>
+                • Запись 14+ типов данных (URL, Text, vCard, Wi-Fi, Crypto и др.).<br>
+                • Поддержка очереди записей (мульти-запись).<br>
+                • Клонирование структуры меток.<br>
+                • Форматирование чипов (Empty NDEF).</p>
+
+                <h4 class="text-[var(--accent)]">Отказ от ответственности (APDU)</h4>
+                <p>В связи с ограничениями безопасности (Sandbox) протокола Web NFC, передача низкоуровневых команд (ISO-DEP / APDU) заблокирована браузерами. Установка и снятие паролей (PWD/PACK) эмулируются интерфейсом в демонстрационных целях.</p>
+                
+                <div class="mt-8 text-center text-xs text-gray-600">
+                    &copy; 2026 NFC Master Project.<br>Все права защищены.
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW: PRIVACY (КОНФИДЕНЦИАЛЬНОСТЬ) ================= -->
+        <section id="view-privacy" class="view-section hidden-view p-6 pb-10 h-full overflow-y-auto">
+            <h2 class="text-3xl font-light mb-8">Политика конфиденциальности</h2>
+            
+            <div class="policy-text bg-[var(--surface)] p-5 border border-[var(--border)]">
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-4">Последнее обновление: 11 Мая 2026</p>
+
+                <h4 class="text-[var(--accent)]">1. Локальное хранение данных</h4>
+                <p>NFC Master уважает вашу приватность. <b>Мы не собираем, не передаем и не храним ваши личные данные на внешних серверах.</b> Вся генерируемая информация (журнал сканирований, история записей, UID меток, настройки интерфейса) хранится исключительно локально в памяти вашего устройства с использованием технологии <span class="font-mono text-white">localStorage</span>.</p>
+
+                <h4 class="text-[var(--accent)]">2. Доступ к аппаратному обеспечению (NFC)</h4>
+                <p>Для корректной работы приложению требуется системное разрешение на использование NFC-модуля. Приложение использует этот модуль строго по вашему прямому указанию (при нажатии кнопок «Сканировать» или «Записать»). Данные с физических смарт-карт и чипов считываются локально и отображаются только вам.</p>
+
+                <h4 class="text-[var(--accent)]">3. Запись данных (NDEF)</h4>
+                <p>При записи пользовательских данных (например, контактов, ссылок, Wi-Fi сетей) на NFC-метку, информация передается напрямую с вашего устройства на чип. Разработчики приложения не имеют доступа к содержимому создаваемых вами записей.</p>
+
+                <h4 class="text-[var(--accent)]">4. Буфер обмена</h4>
+                <p>При включении функции «Авто-копирование UID» приложение получает доступ к буферу обмена для автоматического сохранения серийного номера метки. Это действие происходит локально без сетевых запросов.</p>
+
+                <h4 class="text-[var(--accent)]">5. Удаление данных</h4>
+                <p>Вы имеете полный контроль над своими данными. Вы можете в любой момент удалить всю историю сканирований и сбросить настройки до заводских, воспользовавшись соответствующими кнопками в меню «Журнал» и «Настройки».</p>
+
+                <h4 class="text-[var(--accent)]">6. Изменения политики</h4>
+                <p>Мы оставляем за собой право обновлять данную Политику конфиденциальности по мере добавления нового функционала. Все изменения направлены исключительно на повышение уровня безопасности и прозрачности работы приложения.</p>
+            </div>
+        </section>
+
     </main>
 
     <!-- ================= FULLSCREEN ACTION OVERLAY ================= -->
@@ -444,11 +516,11 @@
         <div class="metro-loader mb-12"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
         <h2 id="ov-title" class="text-3xl font-light text-[var(--accent)] mb-3">Ожидание...</h2>
         <p id="ov-desc" class="text-gray-400 mb-16 text-sm max-w-[250px]">Поднесите смартфон к метке для выполнения операции.</p>
-        <button onclick="app.cancelAction()" class="win-btn border border-[#444] w-full max-w-[250px] text-gray-300 bg-transparent">ОТМЕНИТЬ</button>
+        <button onclick="app.cancelAction()" class="win-btn border border-[var(--border)] w-full max-w-[250px] text-gray-300 bg-transparent">ОТМЕНИТЬ</button>
     </div>
 
     <!-- ================= TOAST NOTIFICATION ================= -->
-    <div id="toast" class="fixed top-safe left-4 right-4 bg-[#111] border-l-4 border-[var(--accent)] p-4 shadow-[0_5px_20px_rgba(0,0,0,0.8)] transition-transform transform -translate-y-[150%] opacity-0 z-[100] flex items-start gap-3">
+    <div id="toast" class="fixed top-safe left-4 right-4 bg-[var(--surface)] border-l-4 border-[var(--accent)] p-4 shadow-[0_5px_20px_rgba(0,0,0,0.8)] transition-transform transform -translate-y-[150%] opacity-0 z-[100] flex items-start gap-3">
         <svg id="toast-icon" class="w-6 h-6 mt-0.5 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         <div>
             <div id="toast-title" class="font-bold text-[11px] uppercase tracking-widest text-white mb-0.5">Уведомление</div>
@@ -507,38 +579,25 @@
 
         class Win10NFCMaster {
             constructor() {
-                // БЕЗОПАСНАЯ ИНИЦИАЛИЗАЦИЯ (Защита от падений и бесконечной загрузки)
-                try {
-                    this.nfc = 'NDEFReader' in window ? new NDEFReader() : null;
-                } catch(e) {
-                    console.warn("NFC Error:", e);
-                    this.nfc = null;
-                }
-
+                try { this.nfc = 'NDEFReader' in window ? new NDEFReader() : null; } catch(e) { this.nfc = null; }
                 this.ctrl = null;
                 this.wakeLock = null;
                 this.queue = [];
                 this.audioCtx = null;
                 
+                // ВНИМАНИЕ: Версия v8 для очистки
                 try {
                     this.state = {
-                        history: JSON.parse(localStorage.getItem('nfc_hist_v7') || '[]'),
-                        settings: JSON.parse(localStorage.getItem('nfc_set_v7') || '{"snd":true, "vib":true, "wake":true, "copy":false}'),
-                        accent: localStorage.getItem('nfc_acc_v7') || '#0078D7',
-                        curView: 'home',
-                        wType: null,
-                        cloneData: null
+                        history: JSON.parse(localStorage.getItem('nfc_hist_v8') || '[]'),
+                        settings: JSON.parse(localStorage.getItem('nfc_set_v8') || '{"snd":true, "vib":true, "wake":true, "copy":false}'),
+                        accent: localStorage.getItem('nfc_acc_v8') || '#0078D7',
+                        curView: 'home', wType: null, cloneData: null
                     };
                 } catch(e) {
                     this.state = { history: [], settings: {snd:true, vib:true, wake:true, copy:false}, accent: '#0078D7', curView: 'home', wType: null, cloneData: null };
                 }
                 
-                // Гарантируем вызов boot
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', () => this.boot());
-                } else {
-                    this.boot();
-                }
+                if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => this.boot()); } else { this.boot(); }
             }
 
             boot() {
@@ -555,30 +614,20 @@
                     if (splash) splash.classList.add('fade-out');
                     setTimeout(() => {
                         if (splash) splash.classList.add('hidden-view');
-                        if(!localStorage.getItem('nfc_setup_v7')) {
-                            this.wiz(1);
-                        } else {
-                            this.nav('home');
-                        }
+                        if(!localStorage.getItem('nfc_setup_v8')) { this.wiz(1); } else { this.nav('home'); }
                     }, 400);
                 }, 1500);
             }
 
             initAudio() {
-                if(!this.audioCtx) {
-                    try { this.audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } 
-                    catch(e) {}
-                }
+                if(!this.audioCtx) { try { this.audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} }
             }
 
             // --- WIZARD OOBE ---
             wiz(step) {
                 const w = document.getElementById('wizard');
                 w.classList.replace('hidden-view', 'flex');
-                [1,2,3,4].forEach(i => {
-                    const el = document.getElementById(`wiz-${i}`);
-                    if(el) el.classList.add('hidden-view');
-                });
+                [1,2,3,4].forEach(i => { const el = document.getElementById(`wiz-${i}`); if(el) el.classList.add('hidden-view'); });
                 
                 const cur = document.getElementById(`wiz-${step}`);
                 if (cur) cur.classList.remove('hidden-view');
@@ -604,16 +653,11 @@
                 
                 try {
                     this.ctrl = new AbortController();
-                    // Показываем кнопку "Пропустить" через 8 секунд, если пользователь застрял
-                    setTimeout(() => {
-                        if (skipBtn && skipBtn.classList.contains('hidden-view')) skipBtn.classList.remove('hidden-view');
-                    }, 8000);
-
+                    setTimeout(() => { if (skipBtn && skipBtn.classList.contains('hidden-view')) skipBtn.classList.remove('hidden-view'); }, 8000);
                     await this.nfc.scan({ signal: this.ctrl.signal });
                     this.nfc.onreading = (e) => {
                         if (this.ctrl) { this.ctrl.abort(); this.ctrl = null; }
-                        this.feedback();
-                        this.showWizardSuccess(e.serialNumber || 'Скрытый UID');
+                        this.feedback(); this.showWizardSuccess(e.serialNumber || 'Скрытый UID');
                     };
                     this.nfc.onreadingerror = () => { this.toast('Сбой', 'Сбой чтения. Держите метку неподвижно', 'err'); };
                 } catch(e) {
@@ -630,13 +674,9 @@
             }
 
             finishWizard() {
-                try { localStorage.setItem('nfc_setup_v7', 'true'); } catch(e){}
-                const w = document.getElementById('wizard');
-                w.classList.add('fade-out');
-                setTimeout(() => {
-                    w.classList.replace('flex', 'hidden-view');
-                    this.nav('home');
-                }, 400);
+                try { localStorage.setItem('nfc_setup_v8', 'true'); } catch(e){}
+                const w = document.getElementById('wizard'); w.classList.add('fade-out');
+                setTimeout(() => { w.classList.replace('flex', 'hidden-view'); this.nav('home'); }, 400);
             }
 
             // --- UI & DIAGNOSTICS ---
@@ -648,25 +688,20 @@
             }
 
             updateHWInfo() {
-                const nfcEl = document.getElementById('hw-nfc');
-                const wakeEl = document.getElementById('hw-wake');
-                const vibEl = document.getElementById('hw-vib');
+                const nfcEl = document.getElementById('hw-nfc'); const wakeEl = document.getElementById('hw-wake'); const vibEl = document.getElementById('hw-vib');
                 if(this.nfc) { if(nfcEl) { nfcEl.textContent = 'Доступен'; nfcEl.className = 'text-right font-bold text-green-500 truncate'; } }
                 if(!('wakeLock' in navigator)) { if(wakeEl) { wakeEl.textContent = 'Отсутствует'; wakeEl.className = 'text-right font-bold text-gray-500 truncate'; } }
                 if(!('vibrate' in navigator)) { if(vibEl) { vibEl.textContent = 'Отсутствует'; vibEl.className = 'text-right font-bold text-gray-500 truncate'; } }
             }
 
             setAccent(hex) {
-                this.state.accent = hex;
-                document.documentElement.style.setProperty('--accent', hex);
-                // Динамический цвет текста для белого акцента
+                this.state.accent = hex; document.documentElement.style.setProperty('--accent', hex);
                 document.documentElement.style.setProperty('--accent-text', hex === '#ffffff' ? '#000000' : '#ffffff');
-                try { localStorage.setItem('nfc_acc_v7', hex); } catch(e){}
+                try { localStorage.setItem('nfc_acc_v8', hex); } catch(e){}
             }
 
             buildWriteGrid() {
-                const grid = document.getElementById('w-types');
-                if(!grid) return;
+                const grid = document.getElementById('w-types'); if(!grid) return;
                 grid.innerHTML = '';
                 for (let k in WRITE_TYPES) {
                     const t = WRITE_TYPES[k];
@@ -680,13 +715,8 @@
 
             nav(view) {
                 document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden-view'); el.classList.remove('slide-up'); });
-                
                 const target = document.getElementById(`view-${view}`);
-                if(target) {
-                    target.classList.remove('hidden-view'); 
-                    void target.offsetWidth; 
-                    target.classList.add('slide-up');
-                }
+                if(target) { target.classList.remove('hidden-view'); void target.offsetWidth; target.classList.add('slide-up'); }
 
                 const btn = document.getElementById('btn-back');
                 if(view === 'home') {
@@ -697,12 +727,12 @@
                     btn.onclick = () => {
                         if(view === 'editor') this.nav('write');
                         else if(view === 'pwd-set' || view === 'pwd-rem') this.nav('security');
+                        else if(view === 'about' || view === 'privacy') this.nav('settings');
                         else this.nav('home');
                     };
-                    const titles = {read:'Считывание', write:'Запись', editor:'Создание', clone:'Клонирование', security:'Безопасность', tools:'Утилиты', 'pwd-set':'Установка PWD', 'pwd-rem':'Снятие PWD', settings:'Параметры', history:'Журнал'};
+                    const titles = {read:'Считывание', write:'Запись', editor:'Создание', clone:'Клонирование', security:'Безопасность', tools:'Утилиты', 'pwd-set':'Установка PWD', 'pwd-rem':'Снятие PWD', settings:'Параметры', history:'Журнал', about:'О приложении', privacy:'Конфиденциальность'};
                     document.getElementById('view-title').textContent = titles[view] || '';
                 }
-
                 this.stopScan();
                 if(view === 'history') this.renderHistory();
                 this.state.curView = view;
@@ -712,17 +742,12 @@
             toast(title, msg, type = 'info') {
                 try {
                     const t = document.getElementById('toast');
-                    document.getElementById('toast-title').textContent = title;
-                    document.getElementById('toast-msg').textContent = msg;
+                    document.getElementById('toast-title').textContent = title; document.getElementById('toast-msg').textContent = msg;
                     const ico = document.getElementById('toast-icon');
-                    
                     ico.setAttribute('class', `w-6 h-6 mt-0.5 ${type==='err'?'text-red-500':'text-[var(--accent)]'}`);
                     ico.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${type==='err'?'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z':'M5 13l4 4L19 7'}"></path>`;
-                    
                     t.style.borderLeftColor = type==='err' ? '#ef4444' : 'var(--accent)';
-                    
-                    t.classList.remove('-translate-y-[150%]', 'opacity-0');
-                    setTimeout(() => t.classList.add('-translate-y-[150%]', 'opacity-0'), 3000);
+                    t.classList.remove('-translate-y-[150%]', 'opacity-0'); setTimeout(() => t.classList.add('-translate-y-[150%]', 'opacity-0'), 3000);
                 } catch(e) {}
             }
 
@@ -733,157 +758,98 @@
                     try {
                         const osc = this.audioCtx.createOscillator(); const gain = this.audioCtx.createGain();
                         osc.type = 'sine'; osc.frequency.setValueAtTime(880, this.audioCtx.currentTime);
-                        gain.gain.setValueAtTime(0.05, this.audioCtx.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.0001, this.audioCtx.currentTime + 0.1);
+                        gain.gain.setValueAtTime(0.05, this.audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.0001, this.audioCtx.currentTime + 0.1);
                         osc.connect(gain); gain.connect(this.audioCtx.destination);
                         osc.start(); osc.stop(this.audioCtx.currentTime + 0.1);
                     } catch(e) {}
                 }
             }
 
-            copyText(text) {
-                if(!text) return;
-                navigator.clipboard.writeText(text);
-                this.toast('Успех', 'Скопировано', 'ok');
-            }
+            copyText(text) { if(!text) return; navigator.clipboard.writeText(text); this.toast('Успех', 'Скопировано', 'ok'); }
 
             async toggleWake(enable) {
                 if(!this.state.settings.wake || !('wakeLock' in navigator)) return;
-                try {
-                    if(enable) this.wakeLock = await navigator.wakeLock.request('screen');
-                    else if(this.wakeLock) { await this.wakeLock.release(); this.wakeLock = null; }
-                } catch(e) {}
+                try { if(enable) this.wakeLock = await navigator.wakeLock.request('screen'); else if(this.wakeLock) { await this.wakeLock.release(); this.wakeLock = null; } } catch(e) {}
             }
 
             // --- HISTORY ---
             log(act, det) {
                 this.state.history.unshift({ time: new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), act, det });
                 if(this.state.history.length > 50) this.state.history.pop();
-                try { localStorage.setItem('nfc_hist_v7', JSON.stringify(this.state.history)); } catch(e){}
-                this.updateHistoryCount();
-                if(this.state.curView === 'history') this.renderHistory();
+                try { localStorage.setItem('nfc_hist_v8', JSON.stringify(this.state.history)); } catch(e){}
+                this.updateHistoryCount(); if(this.state.curView === 'history') this.renderHistory();
             }
             updateHistoryCount() { document.getElementById('lbl-history').textContent = this.state.history.length; }
             renderHistory() {
-                const list = document.getElementById('history-list');
-                if(!list) return;
+                const list = document.getElementById('history-list'); if(!list) return;
                 if(!this.state.history.length) { list.innerHTML = '<div class="text-gray-500 text-sm mt-4">Журнал пуст</div>'; return; }
                 list.innerHTML = this.state.history.map(h => `
                     <div class="bg-[var(--surface)] p-3 border-l-2 border-[var(--accent)] mb-2">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="text-[10px] font-bold bg-[#333] px-1.5 uppercase text-white">${h.act}</span>
-                            <span class="text-[10px] text-gray-500">${h.time}</span>
-                        </div>
+                        <div class="flex justify-between items-center mb-1"><span class="text-[10px] font-bold bg-[#333] px-1.5 uppercase text-white">${h.act}</span><span class="text-[10px] text-gray-500">${h.time}</span></div>
                         <div class="text-sm truncate text-gray-300">${h.det}</div>
                     </div>`).join('');
             }
-            clearHistory() { 
-                this.state.history = []; 
-                try { localStorage.removeItem('nfc_hist_v7'); } catch(e){}
-                this.updateHistoryCount(); this.renderHistory(); 
-            }
+            clearHistory() { this.state.history = []; try { localStorage.removeItem('nfc_hist_v8'); } catch(e){} this.updateHistoryCount(); this.renderHistory(); }
 
             // --- SETTINGS ---
             applySettingsUI() {
-                const setSnd = document.getElementById('set-snd');
-                const setVib = document.getElementById('set-vib');
-                const setWake = document.getElementById('set-wake');
-                const setCopy = document.getElementById('set-copy');
-                
-                if(setSnd) setSnd.checked = this.state.settings.snd;
-                if(setVib) setVib.checked = this.state.settings.vib;
-                if(setWake) setWake.checked = this.state.settings.wake;
-                if(setCopy) setCopy.checked = this.state.settings.copy;
+                const setSnd = document.getElementById('set-snd'); const setVib = document.getElementById('set-vib'); const setWake = document.getElementById('set-wake'); const setCopy = document.getElementById('set-copy');
+                if(setSnd) setSnd.checked = this.state.settings.snd; if(setVib) setVib.checked = this.state.settings.vib; if(setWake) setWake.checked = this.state.settings.wake; if(setCopy) setCopy.checked = this.state.settings.copy;
             }
             saveSettings() {
-                const setSnd = document.getElementById('set-snd');
-                const setVib = document.getElementById('set-vib');
-                const setWake = document.getElementById('set-wake');
-                const setCopy = document.getElementById('set-copy');
-
-                if(setSnd) this.state.settings.snd = setSnd.checked;
-                if(setVib) this.state.settings.vib = setVib.checked;
-                if(setWake) this.state.settings.wake = setWake.checked;
-                if(setCopy) this.state.settings.copy = setCopy.checked;
-                
-                try { localStorage.setItem('nfc_set_v7', JSON.stringify(this.state.settings)); } catch(e){}
+                const setSnd = document.getElementById('set-snd'); const setVib = document.getElementById('set-vib'); const setWake = document.getElementById('set-wake'); const setCopy = document.getElementById('set-copy');
+                if(setSnd) this.state.settings.snd = setSnd.checked; if(setVib) this.state.settings.vib = setVib.checked; if(setWake) this.state.settings.wake = setWake.checked; if(setCopy) this.state.settings.copy = setCopy.checked;
+                try { localStorage.setItem('nfc_set_v8', JSON.stringify(this.state.settings)); } catch(e){}
             }
 
             // --- OVERLAYS ---
             showOv(title, desc) {
                 document.getElementById('ov-title').textContent = title; document.getElementById('ov-desc').textContent = desc;
-                document.getElementById('overlay').classList.replace('hidden-view', 'flex');
-                this.toggleWake(true);
+                document.getElementById('overlay').classList.replace('hidden-view', 'flex'); this.toggleWake(true);
             }
-            hideOv() { 
-                document.getElementById('overlay').classList.replace('flex', 'hidden-view'); 
-                this.toggleWake(false);
-            }
+            hideOv() { document.getElementById('overlay').classList.replace('flex', 'hidden-view'); this.toggleWake(false); }
 
             cancelAction() { 
                 if(this.ctrl) { this.ctrl.abort(); this.ctrl = null; } 
-                this.hideOv(); 
-                this.toast('Отмена', 'Операция прервана', 'err'); 
+                this.hideOv(); this.toast('Отмена', 'Операция прервана', 'err'); 
                 if (this.state.curView === 'read') this.resetRead();
             }
 
-            // --- ADVANCED (PASSWORDS) MOCK ENGINE ---
+            // --- ADVANCED (PASSWORDS) ---
             executeAdvanced(actionType) {
                 if (actionType === 'set_pwd') {
-                    const p = document.getElementById('f_pwd_s').value;
-                    if(p.length !== 4) return this.toast('Ошибка', 'PWD должен быть ровно 4 символа', 'err');
+                    const p = document.getElementById('f_pwd_s').value; if(p.length !== 4) return this.toast('Ошибка', 'PWD должен быть ровно 4 символа', 'err');
                 } else if (actionType === 'rem_pwd') {
-                    const p = document.getElementById('f_pwd_r').value;
-                    if(p.length !== 4) return this.toast('Ошибка', 'Введите текущий пароль', 'err');
+                    const p = document.getElementById('f_pwd_r').value; if(p.length !== 4) return this.toast('Ошибка', 'Введите текущий пароль', 'err');
                 }
-
                 this.showOv('Аутентификация', 'Передача APDU команд на сектор...');
-                
-                setTimeout(() => {
-                    this.hideOv();
-                    document.getElementById('adv-err-modal').classList.replace('hidden-view', 'flex');
-                    this.feedback();
-                }, 1500);
+                setTimeout(() => { this.hideOv(); document.getElementById('adv-err-modal').classList.replace('hidden-view', 'flex'); this.feedback(); }, 1500);
             }
 
             // --- NFC READ ---
             async startScan() {
                 this.initAudio();
                 if(!this.nfc) return this.toast('Ошибка', 'NFC не поддерживается', 'err');
-                
                 document.getElementById('read-idle').classList.add('hidden-view');
                 this.showOv('Чтение', 'Поднесите смартфон к метке');
-                
                 try {
                     this.ctrl = new AbortController();
                     await this.nfc.scan({ signal: this.ctrl.signal });
                     this.nfc.onreading = (e) => { this.hideOv(); this.handleRead(e); };
                     this.nfc.onreadingerror = () => { this.toast('Сбой', 'Держите метку неподвижно', 'err'); };
-                } catch(e) { 
-                    this.hideOv(); 
-                    this.toast('Ошибка', e.message, 'err'); 
-                    this.resetRead(); 
-                }
+                } catch(e) { this.hideOv(); this.toast('Ошибка', e.message, 'err'); this.resetRead(); }
             }
             stopScan() { if(this.ctrl) { this.ctrl.abort(); this.ctrl = null; } this.hideOv(); }
-            
-            resetRead() { 
-                document.getElementById('read-result').classList.add('hidden-view'); 
-                document.getElementById('read-idle').classList.remove('hidden-view'); 
-            }
+            resetRead() { document.getElementById('read-result').classList.add('hidden-view'); document.getElementById('read-idle').classList.remove('hidden-view'); }
 
             handleRead({ serialNumber, message }) {
                 this.feedback();
-                const uid = serialNumber || 'Скрыт';
-                document.getElementById('r-uid').textContent = uid;
+                const uid = serialNumber || 'Скрыт'; document.getElementById('r-uid').textContent = uid;
                 if(this.state.settings.copy && uid !== 'Скрыт') this.copyText(uid);
 
-                const cont = document.getElementById('r-records');
-                cont.innerHTML = '';
-
-                if(!message.records.length) {
-                    cont.innerHTML = '<div class="p-3 text-gray-500 bg-[var(--surface)] text-sm border border-[var(--border)]">NDEF Empty (Метка пуста)</div>';
-                } else {
+                const cont = document.getElementById('r-records'); cont.innerHTML = '';
+                if(!message.records.length) { cont.innerHTML = '<div class="p-3 text-gray-500 bg-[var(--surface)] text-sm border border-[var(--border)]">NDEF Empty (Метка пуста)</div>'; } 
+                else {
                     const dec = new TextDecoder();
                     message.records.forEach((r, i) => {
                         let text = '', tName = r.recordType;
@@ -900,18 +866,14 @@
                             </div>`;
                     });
                 }
-                
                 document.getElementById('read-idle').classList.add('hidden-view');
-                document.getElementById('read-result').classList.remove('hidden-view');
-                document.getElementById('read-result').classList.add('slide-up');
-                
+                document.getElementById('read-result').classList.remove('hidden-view'); document.getElementById('read-result').classList.add('slide-up');
                 this.log('ЧТЕНИЕ', `UID: ${uid} | Блоков: ${message.records.length}`);
             }
 
-            // --- NFC WRITE (QUEUE & SINGLE) ---
+            // --- NFC WRITE ---
             openEditor(type) {
-                this.state.wType = type;
-                const def = WRITE_TYPES[type];
+                this.state.wType = type; const def = WRITE_TYPES[type];
                 document.getElementById('w-editor-title').textContent = def.name;
                 document.getElementById('w-form').innerHTML = def.fields.map(f => {
                     if(f.type==='textarea') return `<div><div class="text-[10px] text-gray-400 mb-1 uppercase font-bold tracking-widest">${f.label}</div><textarea id="${f.id}" class="win-input h-24" placeholder="${f.placeholder||''}"></textarea></div>`;
@@ -921,11 +883,7 @@
             }
 
             buildRecord() {
-                const getV = (id) => document.getElementById(id).value.trim();
-                const enc = new TextEncoder();
-                let rec = null;
-                const t = this.state.wType;
-                
+                const getV = (id) => document.getElementById(id).value.trim(); const enc = new TextEncoder(); let rec = null; const t = this.state.wType;
                 try {
                     if(t === 'text') rec = { recordType: 'text', data: getV('f_txt') };
                     else if(t === 'url' || t === 'video' || t === 'social') rec = { recordType: 'url', data: getV(t==='url'?'f_url':(t==='video'?'f_vid':'f_soc')) };
@@ -938,37 +896,20 @@
                     else if(t === 'app') rec = { recordType: 'android.com:pkg', data: enc.encode(getV('f_pkg')) };
                     else if(t === 'json') rec = { recordType: 'mime', mediaType: 'application/json', data: enc.encode(getV('f_json')) };
                     else if(t === 'wifi') rec = { recordType: 'mime', mediaType: 'application/vnd.wfa.wsc', data: enc.encode(`WIFI:T:WPA;S:${getV('f_ssid')};P:${getV('f_pass')};;`) };
-                    else if(t === 'vcard') {
-                        const vc = `BEGIN:VCARD\nVERSION:3.0\nFN:${getV('f_fn')}\nTEL:${getV('f_tel')}\nEMAIL:${getV('f_em')}\nORG:${getV('f_org')}\nEND:VCARD`;
-                        rec = { recordType: 'mime', mediaType: 'text/vcard', data: enc.encode(vc) };
-                    }
-                    if(!rec || !rec.data || rec.data.length===0) throw new Error();
-                    return rec;
+                    else if(t === 'vcard') { const vc = `BEGIN:VCARD\nVERSION:3.0\nFN:${getV('f_fn')}\nTEL:${getV('f_tel')}\nEMAIL:${getV('f_em')}\nORG:${getV('f_org')}\nEND:VCARD`; rec = { recordType: 'mime', mediaType: 'text/vcard', data: enc.encode(vc) }; }
+                    if(!rec || !rec.data || rec.data.length===0) throw new Error(); return rec;
                 } catch(e) { this.toast('Ошибка', 'Данные не заполнены', 'err'); return null; }
             }
 
             addToQueue() {
                 const rec = this.buildRecord();
                 if(rec) {
-                    this.queue.push(rec);
-                    document.getElementById('queue-banner').classList.remove('hidden-view');
-                    document.getElementById('q-count').textContent = this.queue.length;
-                    this.nav('write');
-                    this.toast('Очередь', 'Блок успешно добавлен', 'ok');
+                    this.queue.push(rec); document.getElementById('queue-banner').classList.remove('hidden-view'); document.getElementById('q-count').textContent = this.queue.length;
+                    this.nav('write'); this.toast('Очередь', 'Блок успешно добавлен', 'ok');
                 }
             }
-
-            writeSingle() {
-                this.initAudio();
-                const rec = this.buildRecord();
-                if(rec) this.execNFC('write', { records: [rec] }, 'Запись', `Одиночная (${WRITE_TYPES[this.state.wType].name})`);
-            }
-
-            commitWrite() {
-                this.initAudio();
-                if(!this.queue.length) return;
-                this.execNFC('write', { records: this.queue }, 'Запись пакета', `Пакет из ${this.queue.length} шт.`);
-            }
+            writeSingle() { this.initAudio(); const rec = this.buildRecord(); if(rec) this.execNFC('write', { records: [rec] }, 'Запись', `Одиночная (${WRITE_TYPES[this.state.wType].name})`); }
+            commitWrite() { this.initAudio(); if(!this.queue.length) return; this.execNFC('write', { records: this.queue }, 'Запись пакета', `Пакет из ${this.queue.length} шт.`); }
 
             startAction(type) {
                 this.initAudio();
@@ -978,41 +919,25 @@
                     this.showOv('Копир (1/2)', 'Поднесите ИСХОДНУЮ метку для чтения');
                     this.ctrl = new AbortController();
                     this.nfc.scan({ signal: this.ctrl.signal }).then(() => {
-                        this.nfc.onreading = (e) => {
-                            this.stopScan(); this.feedback();
-                            this.state.cloneData = e.message;
-                            this.startAction('clone-write');
-                        };
+                        this.nfc.onreading = (e) => { this.stopScan(); this.feedback(); this.state.cloneData = e.message; this.startAction('clone-write'); };
                     }).catch(e => { this.cancelAction(); this.toast('Сбой', e.message, 'err'); });
                 }
-                else if(type === 'clone-write') {
-                    this.execNFC('write', this.state.cloneData, 'Копир (2/2)', 'Метка клонирована');
-                }
+                else if(type === 'clone-write') { this.execNFC('write', this.state.cloneData, 'Копир (2/2)', 'Метка клонирована'); }
             }
 
             async execNFC(type, payload, uiTitle, logText) {
                 if(!this.nfc) return this.toast('Ошибка', 'NFC не поддерживается', 'err');
                 this.showOv(uiTitle, 'Поднесите смартфон к чипу');
-
                 try {
                     this.ctrl = new AbortController();
                     if(type === 'write') {
                         await this.nfc.write(payload, { signal: this.ctrl.signal });
-                        this.feedback();
-                        this.log(uiTitle.includes('Копир') ? 'КЛОН' : (uiTitle.includes('Очистка') ? 'ОЧИСТКА' : 'ЗАПИСЬ'), logText);
-                        this.toast('Успех', 'Операция выполнена', 'ok');
-                        
-                        if(this.queue.length > 0 && uiTitle === 'Запись пакета') {
-                            this.queue = [];
-                            document.getElementById('queue-banner').classList.add('hidden-view');
-                        }
+                        this.feedback(); this.log(uiTitle.includes('Копир') ? 'КЛОН' : (uiTitle.includes('Очистка') ? 'ОЧИСТКА' : 'ЗАПИСЬ'), logText); this.toast('Успех', 'Операция выполнена', 'ok');
+                        if(this.queue.length > 0 && uiTitle === 'Запись пакета') { this.queue = []; document.getElementById('queue-banner').classList.add('hidden-view'); }
                         if(this.state.curView === 'editor') this.nav('home');
                     }
-                } catch(e) {
-                    if(e.name !== 'AbortError') this.toast('Ошибка', e.message, 'err');
-                } finally {
-                    this.hideOv(); this.ctrl = null;
-                }
+                } catch(e) { if(e.name !== 'AbortError') this.toast('Ошибка', e.message, 'err'); } 
+                finally { this.hideOv(); this.ctrl = null; }
             }
         }
 
